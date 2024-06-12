@@ -1,0 +1,231 @@
+---
+title: "R Notebook"
+output: html_notebook
+---
+
+
+Various genome-related files are required during the iCLIP analysis pipeline.
+The steps to generate these should be the same across all datasets analysed, if the virus is the same, so the genome directory can be copied into the new analysis folder without needing to rerun this.
+
+Sources of data used are:
+
+Human annotation: http://ftp.ensembl.org/pub/release-106/gtf/homo_sapiens/
+Homo_sapiens.GRCh38.106.gtf.gz
+
+Human fasta: http://ftp.ensembl.org/pub/release-106/fasta/homo_sapiens/dna/ Homo_sapiens.GRCh38.dna.primary_assembly.fa.gz
+
+SINV GTF:
+
+
+
+```{r}
+library(GenomicRanges)
+library(rtracklayer)
+library(tidyverse)
+library(Biostrings)
+library(magrittr)
+```
+
+Merge human and SINV fasta files. Viral genome will represent an additional 'chromosome' in the genome. The fasta header used here should be the chromosome name (seqname) used in the annotation.
+
+```{bash}
+cat Homo_sapiens.GRCh38.dna.primary_assembly.fa SINV_fasta.fa | \
+gzip > HS.GRCh38.SINV.fa.gz
+
+
+```
+
+Convert downloaded gff to gtf
+```{bash}
+agat_convert_sp_gff2gtf.pl \
+--gff SINV_genome_annotation.gff3 \
+--gtf_version 3 \
+--output SINV_anno.gtf
+
+
+
+
+```
+
+The SINV genome annotation needs to be added to the human genome annotation to create a single annotation object. 
+This can be done in R.
+
+```{r}
+# first fix the issue with annotation adn then run this chunk with fixed SINV annotation
+setwd("/home2/2459810a/iCLIP_analysis/Hackathon_PURAB/")
+load("/home2/2459810a/iCLIP_analysis/Hackathon_PURAB/Input_Data/genome_annotations.gtf")
+
+human_GTF <- rtracklayer::import("/home2/2459810a/iCLIP_analysis/Hackathon_PURAB/Input_Data/genome_annotations.gtf")
+SINV_GTF <- rtracklayer::import("/home2/2459810a/iCLIP_analysis/Hackathon_PURAB/Input_Data/SINV_anno.gtf")
+seqlevels(SINV_GTF) <- "SINV"
+SINV_GTF <- SINV_GTF %>% plyranges::mutate(seqnames = "SINV")
+SINV_GTF
+rtracklayer::export(SINV_GTF, "test.gtf", "gtf")
+
+human_SINV_GTF <- GRangesList(human_GTF, SINV_GTF) %>% unlist()
+
+rtracklayer::export(human_SINV_GTF, "/home2/2459810a/iCLIP_analysis/Hackathon_PURAB/Input_Data/Homo_sapiens.GRCh38.106_SINV.gtf")
+```
+
+The genome index is an object created by STAR for use in alignment. 
+
+genomeFastaFiles - genome fasta 
+
+sjdbGTFfile - genome annotation, which it uses to determine splice junction locations.
+
+genomeDir - where the index should be stored
+
+alignSJoverhangMin - minimum overhang for unannotated junctions
+
+sjdbOverhang - length of the genomic sequence around annotated junctions to be used in constructing splice junction db. Ideal length should be read length - 1 but default of 100 usually works fine
+
+limitGenomeGenerateRAM - max available RAM for generating genome (this is default value)
+
+genomeSAindexNbases - this should be between 10 and 15 and is the length (in bases) of SA pre-indexing string (not sure what this is). If it is longer, it will use more memory but allow for faster search.
+
+genomeSAsparseD - distance between indices. Larger number will decrease need for RAM. Default is 1.
+
+
+```{bash, engine.opts = '-l'}
+STAR --runThreadN 8 --runMode genomeGenerate \
+--genomeFastaFiles HS.GRCh38.SINV.fa \
+--sjdbGTFfile Homo_sapiens.GRCh38.106_SINV.gtf \
+--genomeDir STAR \
+--alignSJoverhangMin 8 --sjdbOverhang 100 \
+--limitGenomeGenerateRAM 31000000000 --genomeSAindexNbases 10 --genomeSAsparseD 4
+```
+
+
+There are different requirements of the genome for htseq, relative to alignment. A new 'fixed' version of the SINV annotation needed to be made. This might have been a problem specific to this genome annotation so might not be necessary with the new genome annotation.
+
+```{r}
+read_tsv("/home2/2459810a/iCLIP_analysis/Hackathon_PURAB/Input_Data/SINV_anno.gtf", skip = 3, col_names = FALSE) %>%
+  mutate(X9 = str_replace(X9, "original_biotype", "gene_biotype")) %>%
+  mutate(X9 = case_when(
+    str_detect(X9, "UTR") & !str_detect(X9, "gene_biotype") ~ paste0(X9, " gene_biotype \"rna\";"),
+    TRUE ~ X9
+  )) %>%
+  mutate(X9 = case_when(
+    str_detect(X9, "gene_biotype") ~ X9,
+    TRUE ~ paste0(X9, " gene_biotype \"protein_coding\";")
+  )) %>%
+  mutate(X9 = str_remove_all(X9, "\"Genbank:.*\" ")) %>%
+  write_tsv("/home2/2459810a/iCLIP_analysis/Hackathon_PURAB/Input_Data/SINV_anno_fixed.gtf", 
+            col_names = FALSE, escape = "none")
+```
+
+### Combine with human gtf
+
+Combine the new, fixed version of SINV annotation with human genome. 
+
+This version did not work for me... I instead used the script below and ran it in R.
+```{bash}
+mkdir -p GENOMEDIR/sliding_window
+
+cat \
+/home2/2459810a/iCLIP_analysis/Hackathon_PURAB/Input_Data/Homo_sapiens.GRCh38.106.gtf \
+/home2/2459810a/iCLIP_analysis/Hackathon_PURAB/Input_Data/SINV_anno_fixed.gtf >\
+./sliding_window/HS.GRCh38.SINV_attributefix.gtf
+
+```
+
+
+```{r}
+# setwd("")
+human_GTF <- rtracklayer::import("./Input_Data/Homo_sapiens.GRCh38.106.gtf")
+SINV_GTF_fix <- rtracklayer::import("./Input_Data/SINV_anno_fixed.gtf")
+seqlevels(SINV_GTF_fix) <- "SINV"
+SINV_GTF_fix <- SINV_GTF_fix %>% plyranges::mutate(seqnames = "SINV")
+
+human_SINV_GTF_fix <- GRangesList(human_GTF, SINV_GTF_fix) %>% unlist()
+
+rtracklayer::export(human_SINV_GTF_fix, "/Input_Data/Homo_sapiens.GRCh38.106_SINV_fixed.gtf")
+
+```
+
+
+### Add missing gene_name attributes to ensembl gtf
+Ensembl GTF and GFF3 have some missing 'gene_name' attributes --> Fix with pygtftk  
+
+```{bash}
+conda activate pygtftk
+# Get number of unique gene_id, gene_name, transcript_id, transcript_name (to check #gene_name < gene_id; #transcript_name < transcript_id)
+gtftk count_key_values \
+-u -i sliding_window/Homo_sapiens.GRCh38.106_SINV_fixed.gtf \
+-k gene_id,gene_name,transcript_id,transcript_name
+
+# Create new gene_name as gene_name|gene_id
+gtf=sliding_window/Homo_sapiens.GRCh38.106_SINV_fixed.gtf
+base=$(basename "$gtf")
+output="sliding_window/$(echo ${base} |sed -e 's/.gtf/_with_gn.gtf/')"
+
+gtftk merge_attr \
+-i $gtf \
+-k gene_name,gene_id \
+-d gene_name > $output
+
+# Create new transcript_name as transcript_name|transcript_id
+gtf=sliding_window/Homo_sapiens.GRCh38.106_SINV_fixed_with_gn.gtf
+base=$(basename "$gtf")
+output="sliding_window/$(echo ${base} |sed -e 's/_with_gn.gtf/_with_gn_tn.gtf/')"
+
+gtftk merge_attr \
+-i $gtf \
+-k transcript_name,transcript_id \
+-d transcript_name > $output
+
+# Check the number of gene_id/name and transcript_id/name match
+gtftk count_key_values \
+-u -i sliding_window/Homo_sapiens.GRCh38.106_SINV_fixed_with_gn_tn.gtf \
+-k gene_id,gene_name,transcript_id,transcript_name
+
+conda deactivate
+
+```
+
+### Flatten annotation
+
+```{bash}
+file=sliding_window/*_with_gn_tn.gtf
+base=$(basename $file _with_gn_tn.gtf)
+
+/home4/2711498i/miniconda3/envs/htseq-clip/bin/htseq-clip annotation \
+-g $file \
+-u gene_id \
+-n gene_name \
+-t gene_biotype \
+--splitExons \
+--unsorted \
+-o sliding_window/$(echo ${base}).flattened.annotation.txt.gz
+
+```
+
+### Create sliding window
+
+```{bash}
+# 50/20 - as in Hentze ENO1 paper
+/home4/2711498i/miniconda3/envs/htseq-clip/bin/htseq-clip createSlidingWindows \
+-i sliding_window/Homo_sapiens.GRCh38.106_SINV_fixed.flattened.annotation.txt.gz \
+-w 50 \
+-s 20 \
+-o sliding_window/HS.GRCh38.SINV_attribute-fix.flattened.w50s20.txt.gz
+
+```
+
+### Create annotation ID file
+
+```{bash}
+/home4/2711498i/miniconda3/envs/htseq-clip/bin/htseq-clip mapToId \
+-a sliding_window/HS.GRCh38.SINV_attribute-fix.flattened.w50s20.txt.gz \
+-o sliding_window/HS.GRCh38.SINV_attribute-fix.flattened.w50s20.maptoid.txt.gz
+
+```
+
+### Calculate chromosome size 
+
+```{bash, engine.opts = '-l'}
+samtools faidx HS.GRCh38.SINV.fa
+
+cut -f1,2 HS.GRCh38.SINV.fa.fai > sizes.genome
+```
+
