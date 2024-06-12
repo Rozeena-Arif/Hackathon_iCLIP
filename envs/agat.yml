@@ -1,0 +1,8 @@
+name: agat
+channels:
+  - nanoporetech
+  - conda-forge
+  - bioconda
+  - defaults
+dependencies:
+  - agat
