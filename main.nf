@@ -1,8 +1,8 @@
 include {CONCAT} from './modules/concat_genome.nf'
-include {GFF_TO_GTF} from './modules/gff_to_gtf.nf'
+include {GFF_TO_GTF} from './modules/concat_genome.nf'
 
 workflow
 {
 	CONCAT(fastaDir=params.refGenomeDir)
-	GFF_TO_GTF(gffFile=params.annotation_dir/params.gff_file)
+	GFF_TO_GTF(gffFile="${params.annotation}${params.gff_file}")
 }
