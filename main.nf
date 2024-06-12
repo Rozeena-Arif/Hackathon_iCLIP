@@ -6,3 +6,5 @@ workflow
 	CONCAT(fastaDir=params.refGenomeDir)
 	GFF_TO_GTF(gffFile="${params.annotation}${params.gff_file}")
 }
+
+//
