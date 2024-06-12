@@ -1,0 +1,28 @@
+##sequence-region J02363.1 1 11703
+##species https://www.ncbi.nlm.nih.gov/Taxonomy/Browser/wwwtax.cgi?id=11034
+J02363.1	Genbank	region	1	11703	.	+	.	ID=J02363.1:1..11703;Dbxref=taxon:11034;gbkey=Src;mol_type=genomic RNA
+J02363.1	Genbank	mRNA	1	11703	.	+	.	ID=rna-J02363.1:1..11703;gbkey=mRNA;product=49S genomic mRNA
+J02363.1	Genbank	exon	1	11703	.	+	.	ID=exon-J02363.1:1..11703-1;Parent=rna-J02363.1:1..11703;gbkey=mRNA;product=49S genomic mRNA
+J02363.1	Genbank	CDS	60	7601	.	+	0	ID=cds-AAA96974.1;Parent=rna-J02363.1:1..11703;Dbxref=NCBI_GP:AAA96974.1;Name=AAA96974.1;gbkey=CDS;product=AAA96974.1;protein_id=AAA96974.1;transl_except=(pos:5748..5750%2Caa:Other)
+J02363.1	Genbank	mature_protein_region_of_CDS	5751	7598	.	+	.	ID=id-AAA96974.1:1898..2513;Parent=cds-AAA96974.1;gbkey=Prot;product=nsp4 nonstructural protein (putative start)%3B putative
+J02363.1	Genbank	sequence_alteration	5	5	.	+	.	ID=id-J02363.1:5..5;Note=a in hrsp strain%3B g in hrlp and wt [7]%2C[9];gbkey=variation
+J02363.1	Genbank	sequence_alteration	25	25	.	+	.	ID=id-J02363.1:25..25;Note=g in hrsp strain and wt%3B a in hrlp [7]%2C[9];gbkey=variation
+J02363.1	Genbank	CDS	60	5750	.	+	0	ID=cds-AAA96975.1;Dbxref=NCBI_GP:AAA96975.1;Name=AAA96975.1;gbkey=CDS;product=AAA96975.1;protein_id=AAA96975.1
+J02363.1	Genbank	mature_protein_region_of_CDS	60	1679	.	+	.	ID=id-AAA96975.1:1..540;Parent=cds-AAA96975.1;gbkey=Prot;product=nsp1 nonstructural protein
+J02363.1	Genbank	mature_protein_region_of_CDS	1680	4100	.	+	.	ID=id-AAA96975.1:541..1347;Parent=cds-AAA96975.1;gbkey=Prot;product=nsp2 nonstructural protein
+J02363.1	Genbank	mature_protein_region_of_CDS	4101	5747	.	+	.	ID=id-AAA96975.1:1348..1896;Parent=cds-AAA96975.1;gbkey=Prot;product=nsp3 nonstructural protein
+J02363.1	Genbank	mRNA	7598	11703	.	+	.	ID=rna-J02363.1:7598..11703;gbkey=mRNA;product=26S subgenomic mRNA
+J02363.1	Genbank	exon	7598	11703	.	+	.	ID=exon-J02363.1:7598..11703-1;Parent=rna-J02363.1:7598..11703;gbkey=mRNA;product=26S subgenomic mRNA
+J02363.1	Genbank	CDS	7647	11384	.	+	0	ID=cds-AAA96976.1;Parent=rna-J02363.1:7598..11703;Dbxref=NCBI_GP:AAA96976.1;Name=AAA96976.1;gbkey=CDS;product=AAA96976.1;protein_id=AAA96976.1
+J02363.1	Genbank	mature_protein_region_of_CDS	7647	8438	.	+	.	ID=id-AAA96976.1:1..264;Parent=cds-AAA96976.1;gbkey=Prot;product=capsid (c) protein
+J02363.1	Genbank	mature_protein_region_of_CDS	8439	8630	.	+	.	ID=id-AAA96976.1:265..328;Parent=cds-AAA96976.1;gbkey=Prot;product=e-3 structural protein
+J02363.1	Genbank	mature_protein_region_of_CDS	8631	9899	.	+	.	ID=id-AAA96976.1:329..751;Parent=cds-AAA96976.1;gbkey=Prot;product=e-2 structural protein
+J02363.1	Genbank	mature_protein_region_of_CDS	9900	10064	.	+	.	ID=id-AAA96976.1:752..806;Parent=cds-AAA96976.1;gbkey=Prot;product=6k structural protein
+J02363.1	Genbank	mature_protein_region_of_CDS	10065	11381	.	+	.	ID=id-AAA96976.1:807..1245;Parent=cds-AAA96976.1;gbkey=Prot;product=e-1 structural protein
+J02363.1	Genbank	sequence_alteration	8644	8644	.	+	.	ID=id-J02363.1:8644..8644;Note=a in hrsp%3B g in hrlp [2]%2C[1]%2C[9];gbkey=variation
+J02363.1	Genbank	sequence_alteration	8698	8698	.	+	.	ID=id-J02363.1:8698..8698;Note=t in hrsp%3B a in hrlp [2]%2C[1]%2C[9];gbkey=variation
+J02363.1	Genbank	sequence_alteration	9782	9782	.	+	.	ID=id-J02363.1:9782..9782;Note=t in hrsp%3B c in hrlp [2]%2C[1]%2C[9];gbkey=variation
+J02363.1	Genbank	sequence_alteration	9884	9884	.	+	.	ID=id-J02363.1:9884..9884;Note=t in hrsp%3B c in hrlp [2]%2C[1]%2C[9];gbkey=variation
+J02363.1	Genbank	sequence_alteration	11568	11568	.	+	.	ID=id-J02363.1:11568..11568;Note=t in hrsp%3B c in sin-1(16) [5];gbkey=variation
+J02363.1	Genbank	sequence_alteration	11697	11697	.	+	.	ID=id-J02363.1:11697..11697;Note=a in hrsp%3B g in sin-1(16) [5];gbkey=variation
+
