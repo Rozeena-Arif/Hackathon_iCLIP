@@ -1,0 +1,15 @@
+##gtf-version 3
+##sequence-region J02363.1 1 11703
+##species https://www.ncbi.nlm.nih.gov/Taxonomy/Browser/wwwtax.cgi?id=11034
+J02363.1	Genbank	gene	1	11703	.	+	.	gene_id "nbisL1-mrna-1"; ID "nbisL1-mrna-1"; gbkey "mRNA"; product "49S genomic mRNA";
+J02363.1	Genbank	transcript	1	11703	.	+	.	gene_id "nbisL1-mrna-1"; transcript_id "rna-J02363.1:1..11703"; ID "rna-J02363.1:1..11703"; Parent "nbisL1-mrna-1"; gbkey "mRNA"; original_biotype "mrna"; product "49S genomic mRNA";
+J02363.1	Genbank	exon	1	11703	.	+	.	gene_id "nbisL1-mrna-1"; transcript_id "rna-J02363.1:1..11703"; ID "exon-J02363.1:1..11703-1"; Parent "rna-J02363.1:1..11703"; gbkey "mRNA"; product "49S genomic mRNA";
+J02363.1	Genbank	CDS	60	5750	.	+	0	gene_id "nbisL1-mrna-1"; transcript_id "rna-J02363.1:1..11703"; Dbxref "NCBI_GP:AAA96974.1"; ID "cds-AAA96974.1"; Name "AAA96974.1"; Parent "rna-J02363.1:1..11703"; gbkey "CDS"; product "AAA96974.1"; protein_id "AAA96974.1"; transl_except "(pos:5748..5750,aa:Other)";
+J02363.1	Genbank	five_prime_utr	1	59	.	+	.	gene_id "nbisL1-mrna-1"; transcript_id "rna-J02363.1:1..11703"; ID "nbis-five_prime_utr-1"; Parent "rna-J02363.1:1..11703"; gbkey "mRNA"; original_biotype "five_prime_UTR"; product "49S genomic mRNA";
+J02363.1	Genbank	three_prime_utr	5751	11703	.	+	.	gene_id "nbisL1-mrna-1"; transcript_id "rna-J02363.1:1..11703"; ID "nbis-three_prime_utr-1"; Parent "rna-J02363.1:1..11703"; gbkey "mRNA"; original_biotype "three_prime_UTR"; product "49S genomic mRNA";
+J02363.1	Genbank	gene	7598	11703	.	+	.	gene_id "nbisL1-mrna-2"; ID "nbisL1-mrna-2"; gbkey "mRNA"; product "26S subgenomic mRNA";
+J02363.1	Genbank	transcript	7598	11703	.	+	.	gene_id "nbisL1-mrna-2"; transcript_id "rna-J02363.1:7598..11703"; ID "rna-J02363.1:7598..11703"; Parent "nbisL1-mrna-2"; gbkey "mRNA"; original_biotype "mrna"; product "26S subgenomic mRNA";
+J02363.1	Genbank	exon	7598	11703	.	+	.	gene_id "nbisL1-mrna-2"; transcript_id "rna-J02363.1:7598..11703"; ID "exon-J02363.1:7598..11703-1"; Parent "rna-J02363.1:7598..11703"; gbkey "mRNA"; product "26S subgenomic mRNA";
+J02363.1	Genbank	CDS	7647	11384	.	+	0	gene_id "nbisL1-mrna-2"; transcript_id "rna-J02363.1:7598..11703"; Dbxref "NCBI_GP:AAA96976.1"; ID "cds-AAA96976.1"; Name "AAA96976.1"; Parent "rna-J02363.1:7598..11703"; gbkey "CDS"; product "AAA96976.1"; protein_id "AAA96976.1";
+J02363.1	Genbank	five_prime_utr	7598	7646	.	+	.	gene_id "nbisL1-mrna-2"; transcript_id "rna-J02363.1:7598..11703"; ID "nbis-five_prime_utr-2"; Parent "rna-J02363.1:7598..11703"; gbkey "mRNA"; original_biotype "five_prime_UTR"; product "26S subgenomic mRNA";
+J02363.1	Genbank	three_prime_utr	11385	11703	.	+	.	gene_id "nbisL1-mrna-2"; transcript_id "rna-J02363.1:7598..11703"; ID "nbis-three_prime_utr-2"; Parent "rna-J02363.1:7598..11703"; gbkey "mRNA"; original_biotype "three_prime_UTR"; product "26S subgenomic mRNA";
