@@ -18,3 +18,27 @@ script:
 	"""
 }
 
+process GFF_TO_GTF {
+	tag  "convert gff to gtf format"
+	
+	conda 'envs/agat.yml'
+
+        publishDir (
+                path: "${baseDir}/assets/annotation/gtf",
+                mode: 'copy',
+                overwrite: 'true'
+                )
+        input:
+                path(gffFile)
+        
+        output:
+                path 'annotation.gtf', emit: gtf
+
+        script:
+                """
+                agat_convert_sp_gff2gtf.pl \
+                --gff ${gffFile} \
+                --gtf_version 3 \
+                --output annotation.gtf
+                """
+}
