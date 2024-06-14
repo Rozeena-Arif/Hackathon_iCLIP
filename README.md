@@ -64,7 +64,7 @@ See [usage docs](docs/usage) for all of the available options when running the p
 
 ## Documentation
 
-The nf-core/clipseq pipeline comes with documentation about the pipeline: [usage](https://nf-co.re/clipseq/usage) and [output](https://nf-co.re/clipseq/output).
+The Hackathon_iCLIP pipeline comes with documentation about the pipeline: [usage](docs/usage.md) and [output](docs/output.md).
 
 ## Credits
 

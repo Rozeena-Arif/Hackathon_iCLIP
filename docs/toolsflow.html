@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+<title>Markmap</title>
+<style>
+* {
+  margin: 0;
+  padding: 0;
+}
+#mindmap {
+  display: block;
+  width: 100vw;
+  height: 100vh;
+}
+</style>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/markmap-toolbar@0.17.0/dist/style.css">
+</head>
+<body>
+<svg id="mindmap"></svg>
+<script src="https://cdn.jsdelivr.net/npm/d3@7.8.5/dist/d3.min.js"></script><script src="https://cdn.jsdelivr.net/npm/markmap-view@0.17.0/dist/browser/index.js"></script><script src="https://cdn.jsdelivr.net/npm/markmap-toolbar@0.17.0/dist/index.js"></script><script>(r => {
+                setTimeout(r);
+              })(() => {
+  const {
+    markmap,
+    mm
+  } = window;
+  const {
+    el
+  } = markmap.Toolbar.create(mm);
+  el.setAttribute('style', 'position:absolute;bottom:20px;right:20px');
+  document.body.append(el);
+})</script><script>((getMarkmap, getOptions, root2, jsonOptions) => {
+              const markmap = getMarkmap();
+              window.mm = markmap.Markmap.create(
+                "svg#mindmap",
+                (getOptions || markmap.deriveOptions)(jsonOptions),
+                root2
+              );
+            })(() => window.markmap,null,{"content":"iCLIP2 Analysis Pipeline: Output","children":[{"content":"Introduction","children":[],"payload":{"lines":"2,3"}},{"content":"Pipeline Overview","children":[{"content":"<a href=\"#preprocessing\">Preprocessing</a>","children":[{"content":"<a href=\"#fastqc\">FastQC</a> - Raw read QC","children":[],"payload":{"lines":"11,12"}},{"content":"<a href=\"#cutadapt\">cutadapt</a> - Adapter and quality trimming","children":[],"payload":{"lines":"12,13"}}],"payload":{"lines":"10,13"}},{"content":"<a href=\"#alignment\">Alignment</a>","children":[{"content":"<a href=\"#star\">STAR</a> - Splice-aware genome alignment","children":[],"payload":{"lines":"14,15"}}],"payload":{"lines":"13,15"}},{"content":"<a href=\"#crosslink-identification\">Crosslink Identification</a>","children":[{"content":"<a href=\"#iclipro\">iCLIPro</a> - Crosslink event extraction","children":[],"payload":{"lines":"16,17"}}],"payload":{"lines":"15,17"}},{"content":"<a href=\"#post-processing\">Post-Processing</a>","children":[{"content":"<a href=\"#pureclip\">PureCLIP</a> - Crosslink site identification and peak calling","children":[],"payload":{"lines":"18,19"}}],"payload":{"lines":"17,19"}},{"content":"<a href=\"#summary-and-quality-control\">Summary and Quality Control</a>","children":[{"content":"<a href=\"#multiqc\">MultiQC</a> - Summarizing metrics and QC","children":[],"payload":{"lines":"20,22"}}],"payload":{"lines":"19,22"}}],"payload":{"lines":"6,7"}},{"content":"Preprocessing","children":[{"content":"FastQC","children":[{"content":"<code>*_fastqc.html</code>: FastQC report containing quality metrics for your raw fastq files.","children":[],"payload":{"lines":"30,31"}},{"content":"<code>*_fastqc.zip</code>: Zip archive containing the FastQC report, tab-delimited data file, and plot images.","children":[],"payload":{"lines":"31,33"}}],"payload":{"lines":"24,25"}},{"content":"cutadapt","children":[{"content":"<code>*.trimmed.fastq.gz</code>: FASTQ file after trimming","children":[],"payload":{"lines":"39,40"}},{"content":"<code>*.log</code>: log file","children":[],"payload":{"lines":"40,42"}}],"payload":{"lines":"33,34"}}],"payload":{"lines":"22,23"}},{"content":"Alignment","children":[{"content":"STAR","children":[{"content":"<code>*.Aligned.sortedByCoord.bam</code>: BAM file of reads mapped to the genome","children":[],"payload":{"lines":"50,51"}},{"content":"<code>*.Aligned.sortedByCoord.bam.bai</code>: BAI file for BAM","children":[],"payload":{"lines":"51,52"}},{"content":"<code>*.Log.final.out</code>: STAR alignment log file","children":[],"payload":{"lines":"52,54"}}],"payload":{"lines":"44,45"}}],"payload":{"lines":"42,43"}},{"content":"Crosslink Identification","children":[{"content":"iCLIPro","children":[{"content":"<code>*.crosslink.bam</code>: BAM file of crosslink events","children":[],"payload":{"lines":"62,63"}},{"content":"<code>*.crosslink.log</code>: iCLIPro log file","children":[],"payload":{"lines":"63,65"}}],"payload":{"lines":"56,57"}}],"payload":{"lines":"54,55"}},{"content":"Post-Processing","children":[{"content":"PureCLIP","children":[{"content":"<code>*.sigxl.bed.gz</code>: BED file of significant crosslink sites","children":[],"payload":{"lines":"73,74"}},{"content":"<code>*.peaks.bed.gz</code>: BED file of peaks","children":[],"payload":{"lines":"74,76"}}],"payload":{"lines":"67,68"}}],"payload":{"lines":"65,66"}},{"content":"Summary and Quality Control","children":[{"content":"MultiQC","children":[{"content":"<code>multiqc_report.html</code>: A standalone HTML file that can be viewed in your web browser.","children":[],"payload":{"lines":"84,85"}},{"content":"<code>multiqc_data/</code>: Directory containing parsed statistics from different tools used in the pipeline.","children":[],"payload":{"lines":"85,86"}},{"content":"<code>multiqc_plots/</code>: Directory containing static images from the report in various formats.","children":[],"payload":{"lines":"86,88"}}],"payload":{"lines":"78,79"}}],"payload":{"lines":"76,77"}},{"content":"Pipeline Information","children":[{"content":"Reports generated by Nextflow:","children":[],"payload":{"lines":"94,95"}},{"content":"Reports generated by the pipeline: <code>pipeline_report.html</code>, <code>pipeline_report.txt</code> and <code>software_versions.csv</code>.","children":[],"payload":{"lines":"95,96"}},{"content":"Documentation for interpretation of results in HTML format: <code>results_description.html</code>.","children":[],"payload":{"lines":"96,97"}}],"payload":{"lines":"88,89"}}],"payload":{"lines":"0,1"}},{})</script>
+</body>
+</html>
