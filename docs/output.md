@@ -13,10 +13,11 @@ The pipeline is built using [Nextflow](https://www.nextflow.io/) and processes d
   * [cutadapt](#cutadapt) - Adapter and quality trimming
 * [Alignment](#alignment)
   * [STAR](#star) - Splice-aware genome alignment
-* [Crosslink Identification](#crosslink-identification)
+<!-- * [Crosslink Identification](#crosslink-identification)
   * [iCLIPro](#iclipro) - Crosslink event extraction
 * [Post-Processing](#post-processing)
-  * [PureCLIP](#pureclip) - Crosslink site identification and peak calling
+  * [PureCLIP](#pureclip) - Crosslink site identification and peak calling -->
+* Visualization : Rshiny
 * [Summary and Quality Control](#summary-and-quality-control)
   * [MultiQC](#multiqc) - Summarizing metrics and QC
 
@@ -54,16 +55,16 @@ The pipeline is built using [Nextflow](https://www.nextflow.io/) and processes d
 
 ## Crosslink Identification
 
-### iCLIPro
+### DEW-seq
 
-[iCLIPro](http://www.biolab.si/iCLIPro/doc/) is used to identify crosslink events from BAM files. It processes the mapped reads to pinpoint crosslink sites at nucleotide resolution.
+[DEW-seq](https://github.com/EMBL-Hentze-group/DEWSeq) is used to identify crosslink events from BAM files. It processes the mapped reads to pinpoint crosslink sites at nucleotide resolution.
 
 **Output directory:** `results/crosslink`
 
 * `*.crosslink.bam`: BAM file of crosslink events
-* `*.crosslink.log`: iCLIPro log file
+* `*.crosslink.log`: log file
 
-## Post-Processing
+<!-- ## Post-Processing
 
 ### PureCLIP
 
@@ -84,7 +85,13 @@ The pipeline is built using [Nextflow](https://www.nextflow.io/) and processes d
 
 * `multiqc_report.html`: A standalone HTML file that can be viewed in your web browser.
 * `multiqc_data/`: Directory containing parsed statistics from different tools used in the pipeline.
-* `multiqc_plots/`: Directory containing static images from the report in various formats.
+* `multiqc_plots/`: Directory containing static images from the report in various formats. -->
+
+### R shiny: visualize
+
+[shiny]() generates a comprehensive report summarizing the metrics and QC results from the entire pipeline.
+
+**Output directory:** `results/plots` directory
 
 ## Pipeline Information
 
